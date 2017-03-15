@@ -8,6 +8,7 @@ handleSearch:function() {
 var showCompleted = this.refs.showCompleted.checked;
 var searchText=this.refs.searchText.value
 this.props.OnSearch(showCompleted, searchText)
+console.log(this.props)
 },
 
 
