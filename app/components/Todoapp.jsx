@@ -2,7 +2,6 @@ var React = require('react');
 var TodoList = require('TodoList');
 var AddTodo = require('AddTodo');
 var TodoSearch = require('TodoSearch');
-var TodoSearch= require('TodoSearch')
 var uuid = require('uuid')
 
 
@@ -19,16 +18,20 @@ var TodoApp = React.createClass({
       todos: [
         {
           id: uuid(),
-          text: 'Walk the dog'
+          text: 'Walk the dog',
+          completed: true
         }, {
           id: uuid(),
-          text: 'Clean the yard'
+          text: 'Clean the yard',
+            completed: true
         }, {
           id: uuid(),
-          text: 'Leave mail on porch'
+          text: 'Leave mail on porch',
+            completed: true
         }, {
           id: uuid(),
-          text: 'Play video games'
+          text: 'Play video games',
+            completed: false
         }
       ]
     };
@@ -39,10 +42,25 @@ var TodoApp = React.createClass({
      ...this.state.todos,
     {
     id:uuid(),
-    text:text
+    text:text,
+    completed: false
+
     }
      ]
     })
+  },
+
+  HandleCheckBox: function (id){
+  var updateTodos = this.state.todos.map( function (todo) {
+   if(todo.id === id){
+    todo.completed=!todo.completed
+  }
+    return todo
+
+  })
+  this.setState({
+todo:updateTodos
+  })
   },
 
   handleSearch: function(showCompleted, searchText ){
@@ -55,13 +73,16 @@ searchText: searchText.toLowerCase()
 
 
   },
+
+
+
   render: function () {
     var {todos} = this.state;
 
     return (
       <div>
         <TodoSearch OnSearch={this.handleSearch}/>
-        <TodoList todos={todos}/>
+        <TodoList todos={todos} onCheck={this.HandleCheckBox}/>
         <AddTodo onAddTodo={this.handleAddTodo}/>
       </div>
     )
