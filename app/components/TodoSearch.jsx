@@ -15,13 +15,13 @@ this.props.OnSearch(showCompleted, searchText)
 
 render: function (){
   return (
-    <div>
+    <div className="container_header">
       <div>
 
     <input type="search" ref="searchText"
        placeholder="search todos" onChange={this.handleSearch}/>
       </div>
-  <label>   <input type="checkbox" ref="showCompleted"   onChange={this.handleSearch} />
+  <label><input type="checkbox" ref="showCompleted"   onChange={this.handleSearch} />
 Show Completed Todos
  </label>
     </div>

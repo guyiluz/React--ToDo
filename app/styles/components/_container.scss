@@ -1,0 +1,35 @@
+.container{
+background:  $light-grey;
+border: 1px solid $light-grey-border;
+border-radius: 5px;
+margin-bottom: 2rem;
+padding: 0
+}
+
+.container_header{
+border-bottom: 1px soild $light-grey-border;
+padding:1rem;
+
+label {
+  cursor: pointer;
+  font-size: 0.75rem;
+
+
+}
+>:last-child{
+display: flex;
+align-items: center;
+
+}
+}
+.container_message{
+color: $light-color;
+margin: 2rem auto;
+text-align: center;;
+
+}
+
+.container_footer{
+border-top: 1px solid $light-grey-border;
+padding: 1rem 1rem 0rem 1rem;
+}
