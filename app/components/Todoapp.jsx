@@ -1,8 +1,11 @@
 var React = require('react');
+var uuid = require('uuid')
+
+var TodoAPI=require('TodoAPI')
 var TodoList = require('TodoList');
 var AddTodo = require('AddTodo');
 var TodoSearch = require('TodoSearch');
-var uuid = require('uuid')
+
 
 
 
@@ -15,27 +18,16 @@ var TodoApp = React.createClass({
     return {
       showCompleted:false,
       searchText:"",
-      todos: [
-        {
-          id: uuid(),
-          text: 'Walk the dog',
-          completed: true
-        }, {
-          id: uuid(),
-          text: 'Clean the yard',
-            completed: true
-        }, {
-          id: uuid(),
-          text: 'Leave mail on porch',
-            completed: true
-        }, {
-          id: uuid(),
-          text: 'Play video games',
-            completed: false
-        }
-      ]
-    };
+      todos: TodoAPI.getTodos()
+    }
   },
+
+componentDidUpdate: function () {
+TodoAPI.setTodos(this.state.todos)
+
+
+},
+
   handleAddTodo: function (text) {
     this.setState({
      todos:[
@@ -50,39 +42,41 @@ var TodoApp = React.createClass({
     })
   },
 
-  HandleCheckBox: function (id){
-  var updateTodos = this.state.todos.map( function (todo) {
-   if(todo.id === id){
-    todo.completed=!todo.completed
-  }
-    return todo
+  handleCheckBox: function (id){
+  var updatedTodos = this.state.todos.map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
 
-  })
+      return todo;
+    });
+
   this.setState({
-todo:updateTodos
+todo:updatedTodos
   })
   },
 
-  handleSearch: function(showCompleted, searchText ){
-this.setState({
-showCompleted:showCompleted,
-searchText: searchText.toLowerCase()
-
-
-})
-
-
+  handleSearch: function (showCompleted, searchText) {
+    this.setState({
+      showCompleted: showCompleted,
+      searchText: searchText.toLowerCase()
+    });
   },
-
 
 
   render: function () {
-    var {todos} = this.state;
+    var {todos, showCompleted, searchText} = this.state;
 
+    var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
+     var x = TodoAPI
+    console.log(filteredTodos)
+    console.log(TodoAPI)
+    var  mydave =3
     return (
+
       <div>
         <TodoSearch OnSearch={this.handleSearch}/>
-        <TodoList todos={todos} onCheck={this.HandleCheckBox}/>
+        <TodoList todos={filteredTodos} onCheck={this.handleCheckBox}/>
         <AddTodo onAddTodo={this.handleAddTodo}/>
       </div>
     )
